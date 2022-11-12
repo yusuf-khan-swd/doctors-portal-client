@@ -9,7 +9,7 @@ const ContactUs = () => {
         <h4 className='text-primary font-bold text-xl'>Contact Us</h4>
         <h3 className='text-4xl'>Stay connect with us</h3>
       </div>
-      <div className="card-body max-w-sm mx-auto">
+      <div className="card-body max-w-md mx-auto">
         <div className="form-control">
           <input type="text" placeholder="Email Address" className="input input-bordered" />
         </div>
