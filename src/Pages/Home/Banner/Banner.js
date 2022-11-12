@@ -5,7 +5,7 @@ import OfficeInfo from './OfficeInfo';
 
 const Banner = () => {
   return (
-    <div className='px-9'>
+    <div className='px-9 mb-32'>
       <div className="hero bg-no-repeat bg-cover bg-center h-[838px]" style={{ backgroundImage: `url(${bgImg})` }}>
         <div className="hero-content flex-col lg:flex-row-reverse">
           <img src={chair} className=" rounded-lg w-1/2 shadow-2xl" alt="" />
