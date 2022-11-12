@@ -4,21 +4,13 @@ import bgImg from '../../../assets/images/bg.png';
 
 const Banner = () => {
   return (
-    <div className='px-9'>
-      <div className="hero bg-no-repeat bg-cover bg-center h-[838px]" style={{ backgroundImage: `url(${bgImg})` }}>
+    <div className=''>
+      <div className="hero bg-no-repeat bg-cover bg-center lg:h-[838px]" style={{ backgroundImage: `url(${bgImg})` }}>
         <div className="hero-content flex-col lg:flex-row-reverse">
-          <img src={chair} className=" rounded-lg w-1/2 shadow-2xl" alt="" />
+          <img src={chair} className=" rounded-lg lg:w-1/2 shadow-2xl" alt="" />
           <div>
-            <h1 className="text-5xl font-bold">Box Office News!</h1>
-            <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-            <button className="btn btn-primary bg-gradient-to-r from-secondary to-primary">Get Started</button>
-          </div>
-        </div>
-        <div className="hero-content flex-col lg:flex-row-reverse">
-          <img src={chair} className=" rounded-lg w-1/2 shadow-2xl" alt="" />
-          <div>
-            <h1 className="text-5xl font-bold">Box Office News!</h1>
-            <p className="py-6">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
+            <h1 className="text-5xl font-bold">Your New Smile Starts Here</h1>
+            <p className="py-6">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the</p>
             <button className="btn btn-primary bg-gradient-to-r from-secondary to-primary">Get Started</button>
           </div>
         </div>
