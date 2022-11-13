@@ -17,7 +17,7 @@ const AppointmentOption = ({ appointmentOption, setTreatment }) => {
         </p>
         <div className="card-actions justify-center">
           <label
-            onClick={() => setTreatment(name)}
+            onClick={() => setTreatment(appointmentOption)}
             htmlFor="booking-modal"
             className="btn btn-primary uppercase text-white"
           >

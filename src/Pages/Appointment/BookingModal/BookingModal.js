@@ -12,7 +12,7 @@ const BookingModal = ({ treatment }) => {
           >
             ✕
           </label>
-          <h3 className="text-lg font-bold"> {treatment} </h3>
+          <h3 className="text-lg font-bold"> {treatment.name} </h3>
           <p className="py-4">
             You've been selected for a chance to get one year of subscription to
             use Wikipedia for free!
