@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AppointmentAvailable from '../AppointmentAvailable/AppointmentAvailable';
+import AvailableAppointment from '../AvailableAppointment/AvailableAppointment';
 import AppointmentBanner from '../AppointmentBanner/AppointmentBanner';
 
 const Appointment = () => {
@@ -8,7 +8,7 @@ const Appointment = () => {
   return (
     <div>
       <AppointmentBanner selectedDate={selectedDate} setSelectedDate={setSelectedDate}></AppointmentBanner>
-      <AppointmentAvailable selectedDate={selectedDate}></AppointmentAvailable>
+      <AvailableAppointment selectedDate={selectedDate}></AvailableAppointment>
     </div>
   );
 };
