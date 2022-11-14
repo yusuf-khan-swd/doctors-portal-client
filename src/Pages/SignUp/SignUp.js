@@ -9,10 +9,19 @@ const SignUp = () => {
         <form>
           <div className="form-control w-full">
             <label className="label">
-              <span className="label-text">Email</span>
+              <span className="label-text">Name</span>
             </label>
             <input
               type="text"
+              className="input input-bordered w-full max-w-xs"
+            />
+          </div>
+          <div className="form-control w-full">
+            <label className="label">
+              <span className="label-text">Email</span>
+            </label>
+            <input
+              type="email"
               className="input input-bordered w-full max-w-xs"
             />
           </div>
@@ -24,17 +33,14 @@ const SignUp = () => {
               type="password"
               className="input input-bordered w-full max-w-xs"
             />
-            <label className="label hover:link">
-              <span className="label-text">Forgot Password?</span>
-            </label>
           </div>
-          <div className="form-control my-3">
+          <div className="form-control mb-3 mt-4">
             <input className="btn" type="submit" value="sign up" />
           </div>
         </form>
         <p>
           Already have an account?
-          <Link to="/login" className="text-secondary">
+          <Link to="/login" className="text-secondary ml-1">
             Please Login
           </Link>
         </p>
