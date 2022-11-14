@@ -14,7 +14,7 @@ const Login = () => {
   };
 
   return (
-    <div className="h-[400px] flex justify-center items-center">
+    <div className="h-[800px] flex justify-center items-center">
       <div className="w-96 shadow-lg rounded-2xl p-7">
         <h2 className="text-xl text-center">Login</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -61,10 +61,10 @@ const Login = () => {
           </div>
         </form>
         <p>
-          New to doctors portal?{" "}
-          <Link to="/signup" className="text-secondary">
+          New to doctors portal?
+          <Link to="/signup" className="text-secondary ml-1">
             Create new account
-          </Link>{" "}
+          </Link>
         </p>
         <div className="divider">OR</div>
         <button className="btn btn-outline btn-accent w-full">
