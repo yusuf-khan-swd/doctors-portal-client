@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const Login = () => {
-  const { signIn, googleSignIn } = useContext(AuthContext);
+  const { signIn, googleSignIn, forgotPassword } = useContext(AuthContext);
   const [loginError, setLoginError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
@@ -18,7 +18,7 @@ const Login = () => {
     handleSubmit,
   } = useForm();
 
-  const onSubmit = (data) => {
+  const handleSignIn = (data) => {
     console.log(data);
 
     setLoginError("");
@@ -49,18 +49,34 @@ const Login = () => {
       })
   };
 
+  const handleForgotPassword = event => {
+    event.preventDefault();
+
+    const email = event.target.email.value;
+    console.log(email)
+
+    forgotPassword(email)
+      .then(() => {
+        toast.success("Password reset email sent. Please check your spam folder.")
+      })
+      .catch(err => {
+        console.log("Forgot password ", err);
+        toast.error(err.message)
+      })
+  };
+
   return (
     <div className="h-[800px] flex justify-center items-center">
       <div className="w-96 shadow-lg rounded-2xl p-7">
         <h2 className="text-xl text-center">Login</h2>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(handleSignIn)}>
           <div className="form-control w-full">
             <label className="label">
               <span className="label-text">Email</span>
             </label>
             <input
               {...register("email", { required: "Email Address is required" })}
-              type="text"
+              type="email"
               className="input input-bordered w-full max-w-xs"
             />
             {errors.email && (
@@ -85,7 +101,7 @@ const Login = () => {
             {errors.password && (
               <p className="text-red-600"> {errors?.password?.message} </p>
             )}
-            <label className="label hover:link">
+            <label htmlFor="forgot-modal" className="label hover:link">
               <span className="label-text">Forgot Password?</span>
             </label>
           </div>
@@ -105,6 +121,29 @@ const Login = () => {
         </button>
         <div className="mb-3 mt-4">
           {loginError && <p className="text-red-600"> {loginError} </p>}
+        </div>
+      </div>
+
+      {/* Modal Start */}
+      <input type="checkbox" id="forgot-modal" className="modal-toggle" />
+      <div className="modal">
+        <div className="modal-box relative">
+          <label htmlFor="forgot-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+          <h3 className="text-lg font-bold mb-3">Please enter your email address</h3>
+          <form onSubmit={handleForgotPassword}>
+            <div className="form-control w-full">
+              <input
+                type="email"
+                name="email"
+                className="input input-bordered w-full max-w-xs mx-auto"
+                placeholder="example@gmail.com"
+                required
+              />
+            </div>
+            <div className="form-control my-3">
+              <input className="btn btn-primary w-full max-w-xs mx-auto" type="submit" value="Send" />
+            </div>
+          </form>
         </div>
       </div>
     </div>
