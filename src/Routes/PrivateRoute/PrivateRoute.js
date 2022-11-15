@@ -3,8 +3,14 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../../contexts/AuthProvider';
 
 const PrivateRoute = ({ children }) => {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   const location = useLocation();
+
+  if (loading) {
+    return <div className='h-screen flex justify-center items-center'>
+      <button className="btn btn-primary text-white loading">Loading</button>
+    </div>
+  }
 
   if (user) {
     return children;
