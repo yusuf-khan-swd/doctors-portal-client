@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const Login = () => {
-  const { signIn } = useContext(AuthContext);
+  const { signIn, googleSignIn } = useContext(AuthContext);
   const [loginError, setLoginError] = useState("");
   const navigate = useNavigate();
   const location = useLocation();
@@ -32,6 +32,20 @@ const Login = () => {
       .catch(error => {
         console.log(error.message);
         setLoginError(error.message);
+      })
+  };
+
+  const handleGoogleSignIn = () => {
+    setLoginError("");
+    googleSignIn()
+      .then(result => {
+        const user = result.user;
+        console.log(user);
+        toast.success('Sign in with Google was successful.')
+      })
+      .catch(err => {
+        console.log("Google Error: ", err);
+        setLoginError(err.message);
       })
   };
 
@@ -78,9 +92,6 @@ const Login = () => {
           <div className="form-control my-3">
             <input className="btn" type="submit" value="login" />
           </div>
-          <div className="mb-8">
-            {loginError && <p className="text-red-600"> {loginError} </p>}
-          </div>
         </form>
         <p>
           New to doctors portal?
@@ -89,9 +100,12 @@ const Login = () => {
           </Link>
         </p>
         <div className="divider">OR</div>
-        <button className="btn btn-outline btn-accent w-full">
+        <button onClick={handleGoogleSignIn} className="btn btn-outline btn-accent w-full">
           Continue with google
         </button>
+        <div className="mb-3 mt-4">
+          {loginError && <p className="text-red-600"> {loginError} </p>}
+        </div>
       </div>
     </div>
   );

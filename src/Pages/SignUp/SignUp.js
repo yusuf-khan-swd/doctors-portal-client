@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const SignUp = () => {
-  const { createUser, updateUser } = useContext(AuthContext);
+  const { createUser, updateUser, googleSignIn } = useContext(AuthContext);
   const [signUpError, setSignUpError] = useState("");
 
   const {
@@ -38,6 +38,19 @@ const SignUp = () => {
       .catch(error => {
         console.log("register user: ", error);
         setSignUpError(error.message);
+      })
+  };
+
+  const handleGoogleSignUp = () => {
+    googleSignIn()
+      .then(result => {
+        const user = result.user;
+        console.log(user);
+        toast.success("Successfully sign up with google");
+      })
+      .catch(err => {
+        console.log("Google Sign up", err);
+        setSignUpError(err.message);
       })
   };
 
@@ -100,9 +113,6 @@ const SignUp = () => {
           <div className="form-control mb-3 mt-4">
             <input className="btn" type="submit" value="sign up" />
           </div>
-          <div className="mb-8">
-            {signUpError && <p className="text-red-600"> {signUpError} </p>}
-          </div>
         </form>
         <p>
           Already have an account?
@@ -111,9 +121,12 @@ const SignUp = () => {
           </Link>
         </p>
         <div className="divider">OR</div>
-        <button className="btn btn-outline btn-accent w-full">
+        <button onClick={handleGoogleSignUp} className="btn btn-outline btn-accent w-full">
           Continue with google
         </button>
+        <div className="mb-3 mt-4">
+          {signUpError && <p className="text-red-600"> {signUpError} </p>}
+        </div>
       </div>
     </div>
   );
