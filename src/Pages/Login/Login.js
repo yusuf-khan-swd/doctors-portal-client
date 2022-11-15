@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const Login = () => {
   const { signIn } = useContext(AuthContext);
+  const [loginError, setLoginError] = useState("");
 
   const {
     register,
@@ -15,12 +16,16 @@ const Login = () => {
   const onSubmit = (data) => {
     console.log(data);
 
+    setLoginError("");
     signIn(data.email, data.password)
       .then(result => {
         const user = result.user;
         console.log(user);
       })
-      .catch(error => console.log(error))
+      .catch(error => {
+        console.log(error.message);
+        setLoginError(error.message);
+      })
   };
 
   return (
@@ -65,6 +70,9 @@ const Login = () => {
           </div>
           <div className="form-control my-3">
             <input className="btn" type="submit" value="login" />
+          </div>
+          <div className="mb-8">
+            {loginError && <p className="text-red-600"> {loginError} </p>}
           </div>
         </form>
         <p>
