@@ -27,15 +27,12 @@ const Login = () => {
   } = useForm();
 
   const handleSignIn = (data) => {
-    console.log(data);
-
     setLoginError("");
     signIn(data.email, data.password)
       .then(result => {
         const user = result.user;
-        console.log(user);
         toast.success("Login successful");
-        setLoggedInUserEmail(data.email);
+        setLoggedInUserEmail(user.email);
       })
       .catch(error => {
         console.log(error.message);
