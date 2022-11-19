@@ -1,12 +1,29 @@
+import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import Loading from '../../Shared/Loading/Loading';
 
 const AddDoctor = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
+  const { data: specialties, isLoading } = useQuery({
+    queryKey: ['specialty'],
+    queryFn: async () => {
+      const res = await fetch('http://localhost:5000/appointmentSpecialty');
+      const data = await res.json();
+      return data;
+    }
+  });
+
+  if (isLoading) {
+    return <Loading></Loading>
+  }
+
   const handleAddDoctor = data => {
     console.log(data);
   };
+
+
 
   return (
     <div>
@@ -41,13 +58,26 @@ const AddDoctor = () => {
           </div>
           <div className="form-control w-full">
             <label className="label">
-              <span className="label-text">Specialty</span>
+              <span className="label-text">Select a Specialty</span>
             </label>
-            <select className="select select-bordered w-full max-w-xs">
-              <option disabled selected>Pick a Specialty</option>
-              <option>Han Solo</option>
-              <option>Greedo</option>
+            <select {...register("specialty")} className="select select-bordered w-full max-w-xs">
+              {
+                specialties.map(specialty => <option key={specialty._id} value={specialty.name}>{specialty.name}</option>)
+              }
             </select>
+          </div>
+          <div className="form-control w-full">
+            <label className="label">
+              <span className="label-text">Image</span>
+            </label>
+            <input
+              {...register("img", { required: "Image is required." })}
+              type="file"
+              className="input input-bordered w-full max-w-xs"
+            />
+            {errors.img && (
+              <p className="text-red-600 mt-1 mb-2">{errors?.img?.message}</p>
+            )}
           </div>
           <div className="form-control mb-3 mt-4">
             <input className="btn" type="submit" value="sign up" />
