@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import toast from 'react-hot-toast';
 
 const AllUsers = () => {
 
-  const { data: users = [] } = useQuery({
+  const { data: users = [], refetch } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
       const res = await fetch('http://localhost:5000/users');
@@ -11,6 +12,22 @@ const AllUsers = () => {
       return data;
     }
   });
+
+  const handleMakeAdmin = id => {
+    fetch(`http://localhost:5000/users/admin/${id}`, {
+      method: 'PUT',
+      headers: {
+        authorization: `bearer ${localStorage.getItem('accessToken')}`
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.modifiedCount) {
+          toast.success('Making admin was successful.');
+          refetch();
+        }
+      })
+  };
 
   return (
     <div>
@@ -33,7 +50,12 @@ const AllUsers = () => {
                   <th> {index + 1} </th>
                   <td> {user.name} </td>
                   <td> {user.email} </td>
-                  <td> <button className='btn btn-xs btn-primary text-white'>Make Admin</button> </td>
+                  <td>
+                    {
+                      user?.role !== 'admin'
+                      && <button onClick={() => handleMakeAdmin(user._id)} className='btn btn-xs btn-primary text-white'>Make Admin</button>
+                    }
+                  </td>
                   <td> <button className='btn btn-xs btn-error'>Delete</button> </td>
                 </tr>)
             }
