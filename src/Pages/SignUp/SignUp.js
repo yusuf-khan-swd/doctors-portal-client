@@ -8,9 +8,9 @@ import useToken from "../../hooks/useToken";
 const SignUp = () => {
   const { createUser, updateUser, googleSignIn } = useContext(AuthContext);
   const [signUpError, setSignUpError] = useState("");
-  const [createdUserEmail, setCreatedUserEmail] = useState("");
 
-  const [token] = useToken(createdUserEmail)
+  const [savedUserEmail, setSavedUserEmail] = useState("");
+  const [token] = useToken(savedUserEmail);
   const navigate = useNavigate();
 
   if (token) {
@@ -52,19 +52,6 @@ const SignUp = () => {
       })
   };
 
-  const handleGoogleSignUp = () => {
-    googleSignIn()
-      .then(result => {
-        const user = result.user;
-        console.log(user);
-        toast.success("Successfully sign up with google");
-      })
-      .catch(err => {
-        console.log("Google Sign up", err);
-        setSignUpError(err.message);
-      })
-  };
-
   const saveUser = (name, email) => {
     const user = { name, email };
 
@@ -78,7 +65,20 @@ const SignUp = () => {
       .then(res => res.json())
       .then(data => {
         console.log('save use: ', data);
-        setCreatedUserEmail(email);
+        setSavedUserEmail(email);
+      })
+  };
+
+  const handleGoogleSignUp = () => {
+    googleSignIn()
+      .then(result => {
+        const user = result.user;
+        console.log(user);
+        toast.success("Successfully sign up with google");
+      })
+      .catch(err => {
+        console.log("Google Sign up", err);
+        setSignUpError(err.message);
       })
   };
 
