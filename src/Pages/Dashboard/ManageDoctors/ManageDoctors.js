@@ -12,25 +12,22 @@ const ManageDoctors = () => {
   };
 
   const {
-    data: doctors = [],
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["doctors"],
-    queryFn: async () => {
-      try {
-        const res = await fetch("http://localhost:5000/doctors", {
-          headers: {
-            authorization: `bearer ${localStorage.getItem("accessToken")}`,
-          },
-        });
-        const data = await res.json();
-        return data;
-      } catch (error) {
-        console.log("error: ", error);
-      }
-    },
-  });
+    data: doctors = [], isLoading, refetch } = useQuery({
+      queryKey: ["doctors"],
+      queryFn: async () => {
+        try {
+          const res = await fetch("http://localhost:5000/doctors", {
+            headers: {
+              authorization: `bearer ${localStorage.getItem("accessToken")}`,
+            },
+          });
+          const data = await res.json();
+          return data;
+        } catch (error) {
+          console.log("error: ", error);
+        }
+      },
+    });
 
   if (isLoading) {
     return <Loading></Loading>;
