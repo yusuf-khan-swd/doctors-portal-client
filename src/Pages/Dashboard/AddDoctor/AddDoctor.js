@@ -6,6 +6,8 @@ import Loading from '../../Shared/Loading/Loading';
 const AddDoctor = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
 
+  const imageHostKey = process.env.REACT_APP_imgbbKey;
+
   const { data: specialties, isLoading } = useQuery({
     queryKey: ['specialty'],
     queryFn: async () => {
@@ -20,10 +22,20 @@ const AddDoctor = () => {
   }
 
   const handleAddDoctor = data => {
-    console.log(data);
+    const image = data.image[0];
+    const formData = new FormData();
+    formData.append('image', image);
+    fetch(`https://api.imgbb.com/1/upload?expiration=600&key=${imageHostKey}`, {
+      method: 'POST',
+      body: formData
+    })
+      .then(res => res.json())
+      .then(imageData => {
+        if (imageData.success) {
+          console.log(imageData.data.url);
+        }
+      })
   };
-
-
 
   return (
     <div>
@@ -71,7 +83,7 @@ const AddDoctor = () => {
               <span className="label-text">Image</span>
             </label>
             <input
-              {...register("img", { required: "Image is required." })}
+              {...register("image", { required: "Image is required." })}
               type="file"
               className="input input-bordered w-full max-w-xs"
             />
