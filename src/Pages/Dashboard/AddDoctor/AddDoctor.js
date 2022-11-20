@@ -25,6 +25,7 @@ const AddDoctor = () => {
     const image = data.image[0];
     const formData = new FormData();
     formData.append('image', image);
+
     fetch(`https://api.imgbb.com/1/upload?expiration=600&key=${imageHostKey}`, {
       method: 'POST',
       body: formData
@@ -32,7 +33,15 @@ const AddDoctor = () => {
       .then(res => res.json())
       .then(imageData => {
         if (imageData.success) {
-          console.log(imageData.data.url);
+
+          const doctor = {
+            name: data.name,
+            email: data.email,
+            specialty: data.specialty,
+            image: imageData.data.url
+          }
+
+          console.log(doctor);
         }
       })
   };
