@@ -7,6 +7,10 @@ import Loading from "../../Shared/Loading/Loading";
 const ManageDoctors = () => {
   const [deletingDoctor, setDeletingDoctor] = useState(null);
 
+  const handleCloseModal = () => {
+    setDeletingDoctor(null);
+  };
+
   const {
     data: doctors = [],
     isLoading,
@@ -101,6 +105,8 @@ const ManageDoctors = () => {
       {deletingDoctor && (
         <ConfirmationModal
           title={`Are you sure you want to delete`}
+          message={`If you delete doctor ${deletingDoctor.name} then it can't be undone`}
+          handleCloseModal={handleCloseModal}
         ></ConfirmationModal>
       )}
     </div>
