@@ -1,6 +1,6 @@
 import React from "react";
 
-const ConfirmationModal = ({ title, message, handleCloseModal }) => {
+const ConfirmationModal = ({ title, message, closeModal, modalData, handleDoctorDelete }) => {
   return (
     <div>
       <input type="checkbox" id="confirm-modal" className="modal-toggle" />
@@ -11,10 +11,10 @@ const ConfirmationModal = ({ title, message, handleCloseModal }) => {
             {message}
           </p>
           <div className="modal-action">
-            <label htmlFor="confirm-modal" className="btn btn-warning ">
+            <label onClick={() => handleDoctorDelete(modalData)} htmlFor="confirm-modal" className="btn btn-warning ">
               Confirm
             </label>
-            <button onClick={handleCloseModal} className="btn btn-accent btn-outline">Cancel</button>
+            <button onClick={closeModal} className="btn btn-accent btn-outline">Cancel</button>
           </div>
         </div>
       </div>

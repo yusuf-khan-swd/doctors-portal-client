@@ -7,8 +7,28 @@ import Loading from "../../Shared/Loading/Loading";
 const ManageDoctors = () => {
   const [deletingDoctor, setDeletingDoctor] = useState(null);
 
-  const handleCloseModal = () => {
+  const closeModal = () => {
     setDeletingDoctor(null);
+  };
+
+  const handleDoctorDelete = (doctor) => {
+    console.log(doctor);
+
+    // fetch(`http://localhost:5000/doctors/${id}`, {
+    //   method: "DELETE",
+    //   headers: {
+    //     "content-type": "application/json",
+    //     authorization: `bearer ${localStorage.getItem("accessToken")}`,
+    //   },
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //     if (data.deletedCount) {
+    //       toast.success("Successfully delete the doctor");
+    //       refetch();
+    //     }
+    //   });
   };
 
   const {
@@ -35,27 +55,6 @@ const ManageDoctors = () => {
   if (isLoading) {
     return <Loading></Loading>;
   }
-
-  const handleDoctorDelete = (id) => {
-    const canProceed = window.confirm("Are you sure you want to delete?");
-    if (canProceed) {
-      fetch(`http://localhost:5000/doctors/${id}`, {
-        method: "DELETE",
-        headers: {
-          "content-type": "application/json",
-          authorization: `bearer ${localStorage.getItem("accessToken")}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          if (data.deletedCount) {
-            toast.success("Successfully delete the doctor");
-            refetch();
-          }
-        });
-    }
-  };
 
   return (
     <div>
@@ -106,7 +105,9 @@ const ManageDoctors = () => {
         <ConfirmationModal
           title={`Are you sure you want to delete`}
           message={`If you delete doctor ${deletingDoctor.name} then it can't be undone`}
-          handleCloseModal={handleCloseModal}
+          modalData={deletingDoctor}
+          handleDoctorDelete={handleDoctorDelete}
+          closeModal={closeModal}
         ></ConfirmationModal>
       )}
     </div>
