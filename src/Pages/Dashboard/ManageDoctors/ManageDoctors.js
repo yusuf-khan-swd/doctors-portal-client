@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import Loading from '../../Shared/Loading/Loading';
 
 const ManageDoctors = () => {
-  const { data: doctors = [] } = useQuery({
+  const { data: doctors = [], isLoading } = useQuery({
     queryKey: ['doctors'],
     queryFn: async () => {
       const res = await fetch('http://localhost:5000/doctors');
@@ -11,9 +12,13 @@ const ManageDoctors = () => {
     }
   });
 
+  if (isLoading) {
+    return <Loading></Loading>
+  }
+
   return (
     <div>
-      <h2 className='text-2xl mb-6'>Manage Doctors: {doctors?.length}</h2>
+      <h2 className='text-2xl mb-6 font-bold'>Manage Doctors: {doctors?.length}</h2>
       <div className="overflow-x-auto">
         <table className="table w-full">
           <thead>
