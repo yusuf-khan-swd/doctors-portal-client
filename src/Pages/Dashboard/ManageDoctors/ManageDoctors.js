@@ -11,26 +11,6 @@ const ManageDoctors = () => {
     setDeletingDoctor(null);
   };
 
-  const handleDoctorDelete = (doctor) => {
-    console.log(doctor);
-
-    // fetch(`http://localhost:5000/doctors/${id}`, {
-    //   method: "DELETE",
-    //   headers: {
-    //     "content-type": "application/json",
-    //     authorization: `bearer ${localStorage.getItem("accessToken")}`,
-    //   },
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //     if (data.deletedCount) {
-    //       toast.success("Successfully delete the doctor");
-    //       refetch();
-    //     }
-    //   });
-  };
-
   const {
     data: doctors = [],
     isLoading,
@@ -54,7 +34,26 @@ const ManageDoctors = () => {
 
   if (isLoading) {
     return <Loading></Loading>;
-  }
+  };
+
+  const handleDoctorDelete = (doctor) => {
+    const id = doctor._id;
+
+    fetch(`http://localhost:5000/doctors/${id}`, {
+      method: "DELETE",
+      headers: {
+        authorization: `bearer ${localStorage.getItem("accessToken")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.deletedCount) {
+          toast.success(`Successfully deleted doctor ${doctor.name} from system.`);
+          refetch();
+        }
+      });
+  };
 
   return (
     <div>
