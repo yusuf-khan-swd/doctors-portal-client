@@ -107,6 +107,7 @@ const ManageDoctors = () => {
           message={`If you delete doctor ${deletingDoctor.name} then it can't be undone`}
           modalData={deletingDoctor}
           successAction={handleDoctorDelete}
+          actionButtonName="Delete"
           closeModal={closeModal}
         ></ConfirmationModal>
       )}
