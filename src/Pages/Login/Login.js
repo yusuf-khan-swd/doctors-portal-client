@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 import useToken from "../../hooks/useToken";
 
@@ -16,9 +16,12 @@ const Login = () => {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
-  if (token) {
-    navigate(from, { replace: true });
-  }
+  // if (token) {
+  //   navigate(from, { replace: true });
+  //   return <Navigate to={from}></Navigate>
+  // }
+
+
 
   const {
     register,
@@ -72,6 +75,9 @@ const Login = () => {
 
   return (
     <div className="h-[800px] flex justify-center items-center">
+      {
+        token && <Navigate to={from}></Navigate>
+      }
       <div className="w-96 shadow-lg rounded-2xl p-7">
         <h2 className="text-xl text-center">Login</h2>
         <form onSubmit={handleSubmit(handleSignIn)}>
