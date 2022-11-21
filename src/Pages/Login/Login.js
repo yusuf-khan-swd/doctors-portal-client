@@ -16,10 +16,9 @@ const Login = () => {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
 
-  // if (token) {
-  //   navigate(from, { replace: true });
-  //   return <Navigate to={from}></Navigate>
-  // }
+  if (token) {
+    navigate(from, { replace: true });
+  }
 
 
 
@@ -75,9 +74,6 @@ const Login = () => {
 
   return (
     <div className="h-[800px] flex justify-center items-center">
-      {
-        token && <Navigate to={from}></Navigate>
-      }
       <div className="w-96 shadow-lg rounded-2xl p-7">
         <h2 className="text-xl text-center">Login</h2>
         <form onSubmit={handleSubmit(handleSignIn)}>
