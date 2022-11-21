@@ -3,6 +3,10 @@ import React, { useEffect, useState } from 'react';
 
 const CheckoutForm = ({ booking }) => {
   const [cardError, setCardError] = useState("");
+  const [success, setSuccess] = useState("");
+  const [transactionId, setTransactionId] = useState("");
+  const [processing, setProcessing] = useState(false);
+
   const [clientSecret, setClientSecret] = useState("");
 
   const stripe = useStripe();
@@ -47,6 +51,8 @@ const CheckoutForm = ({ booking }) => {
       setCardError("");
     }
 
+    setSuccess("");
+    setProcessing(true);
     const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(
       clientSecret,
       {
@@ -60,6 +66,17 @@ const CheckoutForm = ({ booking }) => {
       },
     );
 
+    if (confirmError) {
+      setCardError(confirmError.message);
+      return;
+    }
+
+    if (paymentIntent.status === "succeeded") {
+      setSuccess("Congrats!! Payment was successful.");
+      setTransactionId(paymentIntent.id);
+    }
+
+    setProcessing(false);
   };
 
   return (
@@ -81,11 +98,18 @@ const CheckoutForm = ({ booking }) => {
             },
           }}
         />
-        <button className='btn btn-sm btn-primary mt-6' type="submit" disabled={!stripe || !clientSecret}>
+        <button className='btn btn-sm btn-primary mt-6' type="submit" disabled={!stripe || !clientSecret || processing}>
           Pay
         </button>
       </form>
       <p className="text-red-400">{cardError}</p>
+      {
+        success &&
+        <div>
+          <p className='text-green-500'>{success}</p>
+          <p>Your Transaction Id: <span className='font-bold'>{transactionId}</span></p>
+        </div>
+      }
     </>
   );
 };
