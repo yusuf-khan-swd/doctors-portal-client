@@ -2,13 +2,14 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
+import Loading from '../../Shared/Loading/Loading';
 
 const MyAppointment = () => {
   const { user } = useContext(AuthContext);
 
   const url = `https://doctors-portal-server-alpha.vercel.app/bookings?email=${user?.email}`;
 
-  const { data: bookings = [] } = useQuery({
+  const { data: bookings = [], isLoading } = useQuery({
     queryKey: ['/bookings', user?.email],
     queryFn: async () => {
       const res = await fetch(url, {
@@ -20,6 +21,10 @@ const MyAppointment = () => {
       return data;
     }
   });
+
+  if (isLoading) {
+    return <Loading></Loading>
+  }
 
   return (
     <div>
