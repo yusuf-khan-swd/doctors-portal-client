@@ -20,8 +20,6 @@ const Login = () => {
     navigate(from, { replace: true });
   }
 
-
-
   const {
     register,
     formState: { errors },
@@ -112,7 +110,10 @@ const Login = () => {
               <span className="label-text">Forgot Password?</span>
             </label>
           </div>
-          <div className="form-control my-3">
+          <div>
+            {loginError && <p className="text-red-600 font-semibold"> {loginError} </p>}
+          </div>
+          <div className="form-control mt-3 mb-3">
             <input className="btn" type="submit" value="login" />
           </div>
         </form>
@@ -126,9 +127,6 @@ const Login = () => {
         <button onClick={handleGoogleSignIn} className="btn btn-outline btn-accent w-full">
           Continue with google
         </button>
-        <div className="mb-3 mt-4">
-          {loginError && <p className="text-red-600"> {loginError} </p>}
-        </div>
       </div>
 
       {/* Modal Start */}
